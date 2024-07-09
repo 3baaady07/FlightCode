@@ -7,6 +7,18 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Dtos\RequestDtos\**" />
+    <Compile Remove="Dtos\ResponseDtos\**" />
+    <Content Remove="Dtos\RequestDtos\**" />
+    <Content Remove="Dtos\ResponseDtos\**" />
+    <EmbeddedResource Remove="Dtos\RequestDtos\**" />
+    <EmbeddedResource Remove="Dtos\ResponseDtos\**" />
+    <None Remove="Dtos\RequestDtos\**" />
+    <None Remove="Dtos\ResponseDtos\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="13.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.7" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.7" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.7" />
@@ -15,11 +27,6 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Dtos\ResponseDtos\" />
-    <Folder Include="Dtos\RequestDtos\" />
   </ItemGroup>
 
 </Project>

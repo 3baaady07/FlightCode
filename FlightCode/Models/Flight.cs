@@ -10,9 +10,9 @@ public class Flight
     [Required]
     public string? To { get; set; }
     [Required]
-    public DateTime Departuer { get; set; }
+    public string Departuer { get; set; }
     [Required]
-    public DateTime Arrival { get; set; }
+    public string Arrival { get; set; }
 
     public IEnumerable<Booking>? Bookings { get; set; }
 }

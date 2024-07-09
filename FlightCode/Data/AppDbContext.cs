@@ -17,10 +17,10 @@ public class AppDbContext : DbContext
         modelBuilder.Entity<Flight>().HasData(new Flight
         {
             Id = 1,
-            Arrival = new DateTime(2022, 1, 1, 12, 0, 0),
+            Arrival = "2024/01/01 12:00:00",
             From = "Riyadh",
             To = "Jeddah",
-            Departuer= new DateTime(2022, 1, 1, 10, 0, 0)
+            Departuer= "2024/01/01 10:00:00"
         });
 
         modelBuilder.Entity<Passenger>().HasData(new Passenger
@@ -33,7 +33,7 @@ public class AppDbContext : DbContext
 
         modelBuilder.Entity<Booking>().HasData(new Booking
         {
-            Id = "1",
+            Id = 1,
             FlightId = 1,
             PassengerId = 1
         });
