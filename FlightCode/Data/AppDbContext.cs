@@ -14,7 +14,28 @@ public class AppDbContext : DbContext
     {
         base.OnModelCreating(modelBuilder);
 
-        //modelBuilder.Entity<Booking>()
-        //    .HasKey(e => new { e.FlightId, e.PassengerId });
+        modelBuilder.Entity<Flight>().HasData(new Flight
+        {
+            Id = 1,
+            Arrival = new DateTime(2022, 1, 1, 12, 0, 0),
+            From = "Riyadh",
+            To = "Jeddah",
+            Departuer= new DateTime(2022, 1, 1, 10, 0, 0)
+        });
+
+        modelBuilder.Entity<Passenger>().HasData(new Passenger
+        {
+            Id = 1,
+            FullName = "Ahmed",
+            Email = "ooo@oo.com",
+            PhoneNumber = "123456789"
+        });
+
+        modelBuilder.Entity<Booking>().HasData(new Booking
+        {
+            Id = "1",
+            FlightId = 1,
+            PassengerId = 1
+        });
     }
 }
