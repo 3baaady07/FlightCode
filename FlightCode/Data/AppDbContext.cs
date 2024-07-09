@@ -14,7 +14,7 @@ public class AppDbContext : DbContext
     {
         base.OnModelCreating(modelBuilder);
 
-        modelBuilder.Entity<Booking>()
-            .HasKey(e => new { e.FlightId, e.PassengerId });
+        //modelBuilder.Entity<Booking>()
+        //    .HasKey(e => new { e.FlightId, e.PassengerId });
     }
 }
