@@ -1,15 +1,16 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using FlightCode.Dtos;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FlightCode.Models;
 
 public class Passenger
 {
     public int Id { get; set; }
-    [Required]
+    public int FlightId { get; set; }
     public string? FullName { get; set; }
-    [Required]
     public string? PhoneNumber { get; set; }
-    [Required]
     public string? Email { get; set; }
-    public IEnumerable<Booking>? Bookings { get; set; }
+
+    public Flight? Flight { get; set; }
 }

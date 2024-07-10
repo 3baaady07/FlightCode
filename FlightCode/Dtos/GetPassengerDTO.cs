@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using FlightCode.Models;
+using System.ComponentModel.DataAnnotations;
 
 namespace FlightCode.Dtos
 {
@@ -11,6 +12,5 @@ namespace FlightCode.Dtos
         
         public string? Email { get; set; }
 
-        public List<GetBookingDTO>? Bookings { get; set; }
     }
 }

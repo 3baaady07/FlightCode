@@ -3,6 +3,7 @@ using FlightCode.Repositories.FlightRepository;
 using FlightCode.Dtos;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace FlightCode.Controllers;
 
@@ -14,7 +15,7 @@ public class FlightsController : ControllerBase
     private readonly IFlightRepository _flightRepository;
     private readonly IMapper _mapper;
 
-    public FlightsController(IFlightRepository flightRepository , IMapper mapper)
+    public FlightsController(IFlightRepository flightRepository, IMapper mapper)
     {
         _flightRepository = flightRepository;
         _mapper = mapper;
@@ -23,18 +24,20 @@ public class FlightsController : ControllerBase
     // get flights
     [HttpGet]
     [Route("GetFlights")]
-    public async Task<IEnumerable<Flight>> GetFlights()
+    public async Task<ActionResult<IEnumerable<GetFlightDTO>>> GetFlights()
     {
-        return await _flightRepository.GetFlightsAsync();
+        var allflight = await _flightRepository.GetFlightsAsync();
+        var mapper = _mapper.Map<IEnumerable<GetFlightDTO>>(allflight);
+        return Ok(mapper);
     }
 
     [HttpGet]
     [Route("GetFlightById/{id}")]
-    public async Task<GetFlightDTO> GetFlightById(int id)
+    public async Task<ActionResult<GetFlightDTO>> GetFlightById(int id)
     {
         var flight = await _flightRepository.GetFlightByIdAsync(id);
         var mapper = _mapper.Map<GetFlightDTO>(flight);
-        return mapper;
+        return Ok(mapper);
     }
 
     // add flight
@@ -51,7 +54,7 @@ public class FlightsController : ControllerBase
     [Route("UpdateFlight/{id}")]
     public async Task<ActionResult<PostFlightDTO>> UpdateFlight(PostFlightDTO flight, int id)
     {
-        if(!await _flightRepository.CheckFlightAsync(id))
+        if (!await _flightRepository.CheckFlightAsync(id))
         {
             return NotFound();
         }
@@ -63,7 +66,7 @@ public class FlightsController : ControllerBase
     [Route("DeleteFlight/{id}")]
     public async Task<ActionResult> DeleteFlight(int id)
     {
-        if(!await _flightRepository.CheckFlightAsync(id))
+        if (!await _flightRepository.CheckFlightAsync(id))
         {
             return NotFound();
         }
@@ -80,7 +83,5 @@ public class FlightsController : ControllerBase
         var mapper = _mapper.Map<IEnumerable<GetFlightDTO>>(flights);
         return Ok(mapper);
     }
-
-
     
 }

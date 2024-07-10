@@ -22,9 +22,11 @@ public class PassengersController : ControllerBase
     // get passengers
     [HttpGet]
     [Route("GetPassengers")]
-    public async Task<IEnumerable<Passenger>> GetPassengers()
+    public async Task<ActionResult<IEnumerable<GetPassengerDTO>>> GetPassengers()
     {
-        return await _passengerRepository.GetPassengersAsync();
+        var getALlPasengers= await _passengerRepository.GetPassengersAsync();
+        var mapper = _mapper.Map<IEnumerable<GetPassengerDTO>>(getALlPasengers);
+        return Ok(mapper);
     }
     [HttpGet]
     [Route("GetPassengerById/{id}")]
@@ -39,11 +41,11 @@ public class PassengersController : ControllerBase
         return mapper;
     }
     [HttpPost]
-    [Route("AddPassenger")]
-    public async Task<ActionResult<PostPassengerDTO>> AddPassenger(PostPassengerDTO passenger)
+    [Route("AddPassenger/{FlightId}")]
+    public async Task<ActionResult<PostPassengerDTO>> AddPassenger(PostPassengerDTO passenger ,int FlightId)
     {
         var mapper = _mapper.Map<Passenger>(passenger);
-        await _passengerRepository.AddPassengerAsync(mapper);
+        await _passengerRepository.AddPassengerAsync(mapper, FlightId);
         return Ok();
     }
 

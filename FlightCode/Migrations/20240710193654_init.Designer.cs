@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FlightCode.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240709184342_init")]
+    [Migration("20240710193654_init")]
     partial class init
     {
         /// <inheritdoc />
@@ -24,37 +24,6 @@ namespace FlightCode.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("FlightCode.Models.Booking", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("FlightId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("PassengerId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("FlightId");
-
-                    b.HasIndex("PassengerId");
-
-                    b.ToTable("Bookings");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            FlightId = 1,
-                            PassengerId = 1
-                        });
-                });
-
             modelBuilder.Entity("FlightCode.Models.Flight", b =>
                 {
                     b.Property<int>("Id")
@@ -64,19 +33,15 @@ namespace FlightCode.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Arrival")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Departuer")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("From")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("To")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -87,10 +52,10 @@ namespace FlightCode.Migrations
                         new
                         {
                             Id = 1,
-                            Arrival = "2024/01/01 12:00:00",
-                            Departuer = "2024/01/01 10:00:00",
-                            From = "Riyadh",
-                            To = "Jeddah"
+                            Arrival = "13:00",
+                            Departuer = "12:00",
+                            From = "RH",
+                            To = "JED"
                         });
                 });
 
@@ -103,18 +68,20 @@ namespace FlightCode.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Email")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("FlightId")
+                        .HasColumnType("int");
+
                     b.Property<string>("FullName")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PhoneNumber")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("FlightId");
 
                     b.ToTable("Passengers");
 
@@ -122,39 +89,27 @@ namespace FlightCode.Migrations
                         new
                         {
                             Id = 1,
-                            Email = "ooo@oo.com",
-                            FullName = "Ahmed",
+                            Email = "test",
+                            FlightId = 1,
+                            FullName = "Ali",
                             PhoneNumber = "123456789"
                         });
                 });
 
-            modelBuilder.Entity("FlightCode.Models.Booking", b =>
+            modelBuilder.Entity("FlightCode.Models.Passenger", b =>
                 {
                     b.HasOne("FlightCode.Models.Flight", "Flight")
-                        .WithMany("Bookings")
+                        .WithMany("Passengers")
                         .HasForeignKey("FlightId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("FlightCode.Models.Passenger", "Passenger")
-                        .WithMany("Bookings")
-                        .HasForeignKey("PassengerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Flight");
-
-                    b.Navigation("Passenger");
                 });
 
             modelBuilder.Entity("FlightCode.Models.Flight", b =>
                 {
-                    b.Navigation("Bookings");
-                });
-
-            modelBuilder.Entity("FlightCode.Models.Passenger", b =>
-                {
-                    b.Navigation("Bookings");
+                    b.Navigation("Passengers");
                 });
 #pragma warning restore 612, 618
         }

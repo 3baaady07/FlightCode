@@ -1,4 +1,6 @@
-﻿namespace FlightCode.Dtos
+﻿using FlightCode.Models;
+
+namespace FlightCode.Dtos
 {
     public class GetFlightDTO
     {
@@ -8,6 +10,8 @@
         public string Departuer { get; set; }
         public string Arrival { get; set; }
 
-        public List<GetBookingDTO>? Bookings { get; set; }
+        public ICollection<GetPassengerDTO> Passengers { get; set; }
+               = new List<GetPassengerDTO>();
+
     }
 }

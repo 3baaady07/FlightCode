@@ -22,12 +22,19 @@ namespace FlightCode.Repositories.PassengerRepository
         // get passenger by id
         public async Task<Passenger> GetPassengerByIdAsync(int id)
         {
-            return await _context.Passengers.Include(p => p.Bookings).FirstOrDefaultAsync(p => p.Id == id);
+            return await _context.Passengers.FirstOrDefaultAsync(p => p.Id == id);
         }
         // add passenger
-        public async Task AddPassengerAsync(Passenger passenger)
+        public async Task AddPassengerAsync(Passenger passenger, int FlightId)
         {
-            _context.Passengers.Add(passenger);
+            var AddPassenger = new Passenger
+            {
+                FullName = passenger.FullName,
+                Email = passenger.Email,
+                PhoneNumber = passenger.PhoneNumber,
+                FlightId = FlightId
+            };
+            _context.Passengers.Add(AddPassenger);
             await _context.SaveChangesAsync();
         }
 

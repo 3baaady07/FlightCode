@@ -19,7 +19,7 @@ namespace FlightCode.Repositories.FlightRepository
         // git flights
         public async Task<IEnumerable<Flight>> GetFlightsAsync()
         {
-            return await _context.Flights.ToListAsync();
+            return await _context.Flights.Include(c=>c.Passengers).ToListAsync();
         }
 
 
@@ -27,7 +27,7 @@ namespace FlightCode.Repositories.FlightRepository
         // get flight by id
         public async Task<Flight> GetFlightByIdAsync(int id)
         {
-            return await _context.Flights.Include(f => f.Bookings).FirstOrDefaultAsync(f => f.Id == id);
+            return await _context.Flights.Include(c => c.Passengers).Where(c => c.Id == id).FirstOrDefaultAsync();
         }
 
        

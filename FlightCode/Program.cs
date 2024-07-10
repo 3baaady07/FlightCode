@@ -1,5 +1,5 @@
 using FlightCode.Data;
-using FlightCode.Repositories.BookingRepository;
+using FlightCode.Repositories;
 using FlightCode.Repositories.FlightRepository;
 using FlightCode.Repositories.PassengerRepository;
 using Microsoft.EntityFrameworkCore;
@@ -15,7 +15,6 @@ builder.Services.AddControllers();
 
 builder.Services.AddScoped<IFlightRepository, FlightRepository>();
 builder.Services.AddScoped<IPassengerRepository, PassengerRepository>();
-builder.Services.AddScoped<IBookingRepository, BookingRepository>();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 
@@ -24,16 +23,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddAuthentication("Bearer")
-    .AddJwtBearer(options => options.TokenValidationParameters = new()
-    {
-        ValidateIssuer = true,
-        ValidateAudience = true,
-        ValidateIssuerSigningKey = true,
-        ValidIssuer = builder.Configuration["Authentication:Issuer"],
-        ValidAudience = builder.Configuration["Authentication:Audience"],
-        IssuerSigningKey = new SymmetricSecurityKey(Convert.FromBase64String(builder.Configuration["Authentication:SecretForKey"]))
-    });
+
 
 
 WebApplication app = builder.Build();
